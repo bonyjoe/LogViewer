@@ -1,0 +1,37 @@
+<views:MvxWpfView x:Class="LogViewer.Wpf.Views.MainView"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:views="clr-namespace:Cirrious.MvvmCross.Wpf.Views;assembly=Cirrious.MvvmCross.Wpf"
+                  xmlns:framework="clr-namespace:LogViewer.Wpf.Framework"
+                  mc:Ignorable="d" 
+                  d:DesignHeight="300" d:DesignWidth="300"
+                  Tag="{Binding Path=Title}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Content="Open" Command="{Binding Path=OpenCommand}"/>
+        </Grid>
+        
+        <ListBox Grid.Row="1" 
+                 ItemsSource="{Binding Path=CurrentLog.Lines}"
+                 ItemTemplate="{StaticResource LogLineDataTemplate}"
+                 HorizontalContentAlignment="Stretch"
+                 Grid.IsSharedSizeScope="True"
+                 framework:ItemControlBehaviors.AutoScrollToBottom="true"/>
+        
+    </Grid>
+</views:MvxWpfView>

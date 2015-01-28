@@ -1,0 +1,30 @@
+﻿<Window x:Class="LogViewer.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding Path=Content.Tag, ElementName=mainContentControl, FallbackValue='Log Viewer'}"
+        MinHeight="600" MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" MinWidth="{Binding Path=Visibility, ElementName=sidebarContentControl, Converter={StaticResource Converter_MenuColumnMinWidth}, ConverterParameter=300}"/>
+            </Grid.ColumnDefinitions>
+            
+            <ContentControl Grid.Column="0" x:Name="mainContentControl"/>
+            
+            <ContentControl Grid.Column="1" x:Name="sidebarContentControl"/>
+
+            <GridSplitter HorizontalAlignment="Left" Grid.Column="1" Background="Black" Width="1"/>
+
+        </Grid>
+        
+        <ContentControl Grid.Row="1" x:Name="statusBarContentControl"/>
+    </Grid>
+</Window>

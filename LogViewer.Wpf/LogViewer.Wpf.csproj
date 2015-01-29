@@ -170,6 +170,10 @@
       <Project>{b73ddc53-ee02-4a28-a6cb-659afe5e833a}</Project>
       <Name>LogViewer.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ND.Controls\ND.Controls.csproj">
+      <Project>{bc3de618-2707-4b05-af81-75603dbe4d73}</Project>
+      <Name>ND.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

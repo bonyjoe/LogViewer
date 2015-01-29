@@ -1,0 +1,108 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ND.Controls">
+
+    <Style TargetType="{x:Type local:ColorPicker}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ColorPicker}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Canvas x:Name="PART_ColorCanvas" Panel.ZIndex="1">
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="White"/>
+                                        <GradientStop Color="{Binding Path=CurrentHue, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}, FallbackValue=Pink}" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                                <Canvas x:Name="PART_BlackCanvas" Width="{Binding Path=ActualWidth, ElementName=PART_ColorCanvas}" Height="{Binding Path=ActualHeight, ElementName=PART_ColorCanvas}">
+                                    <Canvas.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="Transparent"/>
+                                            <GradientStop Color="Black" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Canvas.Background>
+                                </Canvas>
+                                <Canvas x:Name="PART_Selector"
+                                    Canvas.Top="{Binding Path=SelectorYPos, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Canvas.Left="{Binding Path=SelectorXPos, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <Path Canvas.Top="-6" Canvas.Left="-6" Fill="Black" Stroke="White" StrokeThickness="1"
+                                      >
+                                        <Path.Data>
+                                            <CombinedGeometry GeometryCombineMode="Exclude">
+                                                <CombinedGeometry.Geometry1>
+                                                    <EllipseGeometry Center="6,6" RadiusX="6" RadiusY="6"/>
+                                                </CombinedGeometry.Geometry1>
+                                                <CombinedGeometry.Geometry2>
+                                                    <EllipseGeometry Center="6,6" RadiusX="3" RadiusY="3"/>
+                                                </CombinedGeometry.Geometry2>
+                                            </CombinedGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                            </Canvas>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <!--<ColumnDefinition Width=".1*"/>-->
+                                </Grid.ColumnDefinitions>
+
+                                <Border x:Name="PART_PreviousColor" Height="20" HorizontalAlignment="Stretch" ToolTip="Previous Color">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{Binding Path=PreviousSelectedColor, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"/>
+                                    </Border.Background>
+                                </Border>
+                                <Border Grid.Column="1" Height="20" HorizontalAlignment="Stretch" ToolTip="Current Color">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{Binding Path=CurrentSelectedColor, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"/>
+                                    </Border.Background>
+                                </Border>
+                                <!--<Border x:Name="PART_InitialColor" Grid.Column="2" Height="20" HorizontalAlignment="Stretch" ToolTip="Initial Color">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{Binding Path=InitialSelectedColor, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}}"/>
+                                    </Border.Background>
+                                </Border>-->
+                            </Grid>
+
+                        </Grid>
+                        
+                        <Grid Grid.Column="1">
+                            <Canvas x:Name="PART_HueCanvas" Width="20" Margin="20,0">
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FF0000" Offset="0"/>
+                                        <GradientStop Color="#FF00FF" Offset="0.167"/>
+                                        <GradientStop Color="#0000FF" Offset="0.333"/>
+                                        <GradientStop Color="#00FFFF" Offset="0.5"/>
+                                        <GradientStop Color="#00FF00" Offset="0.667"/>
+                                        <GradientStop Color="#FFFF00" Offset="0.833"/>
+                                        <GradientStop Color="#FF0000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                                <Canvas x:Name="PART_HueSelector"
+                                    Canvas.Top="{Binding Path=HueSelectorPos, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Canvas.Left="0">
+                                    <Path Canvas.Top="-6" Canvas.Left="0" Fill="Black" Height="12" Width="20"
+                                      Data="M0,0L5,5 0,10z M20,0L15,5 20,10z"/>
+                                </Canvas>
+                            </Canvas>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

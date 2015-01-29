@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogViewer.Wpf", "LogViewer.Wpf\LogViewer.Wpf.csproj", "{475AE540-788C-4931-BDC3-2E1AB1203426}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogViewer.Core", "LogViewer.Core\LogViewer.Core.csproj", "{B73DDC53-EE02-4A28-A6CB-659AFE5E833A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ND.Controls", "ND.Controls\ND.Controls.csproj", "{BC3DE618-2707-4B05-AF81-75603DBE4D73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B73DDC53-EE02-4A28-A6CB-659AFE5E833A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B73DDC53-EE02-4A28-A6CB-659AFE5E833A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B73DDC53-EE02-4A28-A6CB-659AFE5E833A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC3DE618-2707-4B05-AF81-75603DBE4D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC3DE618-2707-4B05-AF81-75603DBE4D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC3DE618-2707-4B05-AF81-75603DBE4D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC3DE618-2707-4B05-AF81-75603DBE4D73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

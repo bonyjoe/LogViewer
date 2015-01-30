@@ -1,5 +1,6 @@
 ﻿using Cirrious.MvvmCross.ViewModels;
 using LogViewer.Core.Model;
+using LogViewer.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,8 @@ namespace LogViewer.Core.ViewModels
     public class SidebarViewModel : BaseViewModel
     {
         #region Fields
+
+        private IFormattingRuleService _ruleService;
 
         private String _currentFilename;
         private ObservableCollection<FormattingRuleData> _rules;
@@ -48,9 +51,19 @@ namespace LogViewer.Core.ViewModels
 
         #region Constructor
 
-        public SidebarViewModel()
+        public SidebarViewModel(IFormattingRuleService ruleService)
         {
-            _rules = new ObservableCollection<FormattingRuleData>();
+            _ruleService = ruleService;
+            if(ruleService.Rules == null)
+            {
+                ruleService.Rules = new ObservableCollection<FormattingRuleData>();
+                this.Rules = ruleService.Rules;
+            }
+            else
+            {
+                this.Rules = ruleService.Rules;
+            }
+
         }
 
         #endregion

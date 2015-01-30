@@ -1,6 +1,7 @@
 ﻿using Cirrious.CrossCore;
 using Cirrious.CrossCore.Core;
 using LogViewer.Core.Framework;
+using LogViewer.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -108,8 +109,20 @@ namespace LogViewer.Core.Model
 
             var tempLines = FileHelper.ReadLines(filename);
             BulkObservableCollection<LogLineData> temp = new BulkObservableCollection<LogLineData>();
+            var ruleService = Mvx.Resolve<IFormattingRuleService> ();
+            var rules = ruleService.Rules.OrderBy(x => x.Priority);
 
-            temp.AddRange(tempLines, (line) => new LogLineData(line));
+            temp.AddRange(tempLines, (line) => 
+                {
+                    var newLine = new LogLineData(line);
+                    foreach (var rule in rules)
+                    {
+                        if (rule.CheckRule(newLine))
+                            break;
+                    }
+
+                    return newLine;
+                });
 
             Lines = temp;
 

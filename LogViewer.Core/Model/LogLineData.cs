@@ -12,8 +12,6 @@ namespace LogViewer.Core.Model
 
         private String _value;
         //private Int64 _lineNum;
-        private String _foreground = "#000000";
-        private String _background = "#CCCCCC";
         private FormattingRuleData _appliedRule = null;
 
         #endregion
@@ -32,16 +30,10 @@ namespace LogViewer.Core.Model
             set { SetProperty(ref _value, value); }
         }
 
-        public String Foreground
+        public FormattingRuleData AppliedRule
         {
-            get { return _foreground; }
-            set { SetProperty(ref _foreground, value); }
-        }
-
-        public String Background
-        {
-            get { return _background; }
-            set { SetProperty(ref _background, value); }
+            get { return _appliedRule; }
+            set { SetProperty(ref _appliedRule, value); }
         }
 
         #endregion

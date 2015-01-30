@@ -58,6 +58,15 @@ namespace LogViewer.Core.Model
 
         public Boolean CheckRule(LogLineData line)
         {
+            if (String.IsNullOrEmpty(line.Value))
+                return false;
+
+            if(line.Value.Contains(_regex))
+            {
+                line.AppliedRule = this;
+                return true;
+            }
+
             return false;
         }
 

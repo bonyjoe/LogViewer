@@ -14,8 +14,8 @@
             
             <TextBlock Grid.Column="1" HorizontalAlignment="Stretch"
                    Text="{Binding Path=Value}"
-                   Foreground="{Binding Path=Foreground}"
-                   Background="{Binding Path=Background}"/>
+                   Foreground="{Binding Path=AppliedRule.ForegroundColor, FallbackValue=Black}"
+                   Background="{Binding Path=AppliedRule.BackgroundColor, FallbackValue=White}"/>
         </Grid>
     </DataTemplate>
     

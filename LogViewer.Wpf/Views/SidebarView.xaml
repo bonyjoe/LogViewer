@@ -4,6 +4,7 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:views="clr-namespace:Cirrious.MvvmCross.Wpf.Views;assembly=Cirrious.MvvmCross.Wpf"
+                  xmlns:controls="clr-namespace:LogViewer.Wpf.Controls"
                   mc:Ignorable="d" 
                   d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -41,12 +42,12 @@
                                 </Grid.ColumnDefinitions>
 
 
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Rule"/>
-                                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Path=Regex, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Foreground"/>
-                                <TextBlock Grid.Row="1" Grid.Column="2" Text="Placeholder"/>
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Background"/>
-                                <TextBlock Grid.Row="2" Grid.Column="2" Text="Placeholder"/>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Rule" Style="{StaticResource MainLabelTextBlock}"/>
+                                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Path=Regex, UpdateSourceTrigger=PropertyChanged}" Margin="2"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Foreground" Style="{StaticResource MainLabelTextBlock}"/>
+                                <controls:ColorSelector Grid.Row="1" Grid.Column="2" Margin="2" SelectedColor="{Binding Path=ForegroundColor, Converter={StaticResource Converter_StringToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Background" Style="{StaticResource MainLabelTextBlock}"/>
+                                <controls:ColorSelector Grid.Row="2" Grid.Column="2" Margin="2" SelectedColor="{Binding Path=BackgroundColor, Converter={StaticResource Converter_StringToColor}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </Grid>
                     </DataTemplate>

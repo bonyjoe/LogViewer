@@ -71,7 +71,7 @@ namespace ND.Controls
 
         private void SelectorXValue_Changed(Double newValue)
         {
-            if (_suppressValueChanged)
+            if (_suppressValueChanged || _colorCanvas == null)
                 return;
 
             _suppressPosChanged = true;
@@ -94,7 +94,7 @@ namespace ND.Controls
 
         private void SelectorYValue_Changed(Double newValue)
         {
-            if (_suppressValueChanged)
+            if (_suppressValueChanged || _colorCanvas == null)
                 return;
 
             _suppressPosChanged = true;
@@ -117,7 +117,7 @@ namespace ND.Controls
 
         private void HueSelectorValue_Changed(Double newValue)
         {
-            if (_suppressValueChanged)
+            if (_suppressValueChanged || _hueCanvas == null)
                 return;
 
             _suppressPosChanged = true;

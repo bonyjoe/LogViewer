@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="LogViewer.Wpf.Controls.ColorSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:ND.Controls;assembly=ND.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             x:Name="rootControl">
+    <Grid DataContext="{Binding ElementName=rootControl}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <ToggleButton x:Name="colorDisplay" Grid.Column="1" Style="{StaticResource ColorToggleButton}"
+                          Background="{Binding Path=SelectedColor, Converter={StaticResource Converter_ColorToBrush}}" 
+                          IsChecked="{Binding Path=IsOpen, ElementName=colorPopup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+        <Popup x:Name="colorPopup" Placement="Bottom" PlacementTarget="{Binding ElementName=colorDisplay}" Width="300"
+               AllowsTransparency="True" StaysOpen="False">
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ListBox Grid.Row="0" ItemsSource="{Binding Path=AvailableColors}"
+                 HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                 SelectedIndex="{Binding Path=SelectedColorIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding Path=., Converter={StaticResource Converter_ColorToBrush}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="20"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Border Grid.Row="1" Padding="10">
+                    <controls:ColorPicker Grid.Row="1" CurrentSelectedColor="{Binding Path=CustomColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Width="auto"/>
+                </Border>
+            </Grid>
+        </Popup>
+    </Grid>
+</UserControl>

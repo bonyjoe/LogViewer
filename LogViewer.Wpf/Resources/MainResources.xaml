@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:LogViewer.Wpf.NativeConverters">
+    <converters:NativeStringToColorConverter x:Key="Converter_StringToColor"/>
+    <converters:NativeColorToBrushConverter x:Key="Converter_ColorToBrush"/>
     <converters:NativeMenuColumnMinWidthConverter x:Key="Converter_MenuColumnMinWidth"/>
     <converters:NativeFileSizeFormattingConverter x:Key="Converter_FileSizeFormatting"/>
     <converters:NativeVisibilityConverter x:Key="Converter_Visibility"/>

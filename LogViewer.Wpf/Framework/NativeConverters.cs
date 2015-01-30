@@ -8,9 +8,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace LogViewer.Wpf.NativeConverters
 {
+    #region Converter_ColorToBrush
+
+    public class ColorToBrushConverter : MvxValueConverter<Color, SolidColorBrush>
+    {
+        protected override SolidColorBrush Convert(Color value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return new SolidColorBrush(value);
+        }
+    }
+
+    public class NativeColorToBrushConverter : MvxNativeValueConverter<ColorToBrushConverter> { }
+
+    #endregion
+
+    #region Converter_StringToColor
+
+    public class StringToColorConverter : MvxValueConverter<String, Color?>
+    {
+        protected override Color? Convert(string value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return ColorConverter.ConvertFromString(value) as Color?;
+        }
+
+        protected override string ConvertBack(Color? value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (!value.HasValue)
+                return String.Empty;
+
+            return value.ToString();
+        }
+    }
+
+    public class NativeStringToColorConverter : MvxNativeValueConverter<StringToColorConverter> { }
+
+    #endregion
+
     #region Converter_MenuColumnMinWidth
 
     public class MenuColumnMinWidthConverter : MvxValueConverter<Visibility, Double>

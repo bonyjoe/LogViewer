@@ -79,6 +79,7 @@ namespace LogViewer.Core.Model
 
         public LogFileData(String filename)
         {
+            _ruleService = Mvx.Resolve<IFormattingRuleService>();
             LoadFile(filename);
         }
 
@@ -111,8 +112,6 @@ namespace LogViewer.Core.Model
 
             var tempLines = FileHelper.ReadLines(filename);
             BulkObservableCollection<LogLineData> temp = new BulkObservableCollection<LogLineData>();
-            var ruleService = Mvx.Resolve<IFormattingRuleService> ();
-            var rules = ruleService.Rules.OrderBy(x => x.Priority);
 
             temp.AddRange(tempLines, (line) => CreateLineData(line));
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cirrious.CrossCore;
+using LogViewer.Core.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,20 @@ namespace LogViewer.Wpf
         public MainWindow()
         {
             InitializeComponent();
+            this.Closing += MainWindow_Closing;
+        }
+
+        void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                var ruleService = Mvx.Resolve<IFormattingRuleService>();
+                ruleService.SaveRules();
+            }
+            catch
+            {
+                //do nothing, we don't want the app to crash when exiting
+            }
         }
     }
 }

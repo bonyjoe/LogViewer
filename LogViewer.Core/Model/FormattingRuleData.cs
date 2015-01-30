@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogViewer.Core.Model
 {
+    [Serializable]
     public class FormattingRuleData : BaseDataItem
     {
         #region Fields
@@ -34,18 +35,31 @@ namespace LogViewer.Core.Model
         public String Regex
         {
             get { return _regex; }
-            set { SetProperty(ref _regex, value); }
+            set 
+            { 
+                SetProperty(ref _regex, value);
+                OnChanged();
+            }
         }
 
         public UInt16 Priority
         {
             get { return _priority; }
-            set { SetProperty(ref _priority, value); }
+            set 
+            { 
+                SetProperty(ref _priority, value);
+                OnChanged();
+            }
         }
 
         #endregion
 
         #region Constructor
+
+        public FormattingRuleData()
+        {
+
+        }
 
         public FormattingRuleData(UInt16 priority)
         {
@@ -58,7 +72,9 @@ namespace LogViewer.Core.Model
 
         public Boolean CheckRule(LogLineData line)
         {
-            if (String.IsNullOrEmpty(line.Value))
+            line.AppliedRule = null;
+
+            if (String.IsNullOrEmpty(line.Value) || String.IsNullOrEmpty(_regex))
                 return false;
 
             if(line.Value.Contains(_regex))
@@ -78,6 +94,18 @@ namespace LogViewer.Core.Model
                 ForegroundColor = this.ForegroundColor,
                 Regex = this.Regex
             };
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler Changed;
+
+        private void OnChanged()
+        {
+            if (Changed != null)
+                Changed(this, EventArgs.Empty);
         }
 
         #endregion

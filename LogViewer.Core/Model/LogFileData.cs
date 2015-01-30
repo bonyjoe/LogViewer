@@ -17,6 +17,8 @@ namespace LogViewer.Core.Model
     {
         #region Fields
 
+        private IFormattingRuleService _ruleService;
+
         private FileSystemWatcher _watch;
         private Object _watchLock = new Object();
         private Timer _timer;
@@ -112,17 +114,7 @@ namespace LogViewer.Core.Model
             var ruleService = Mvx.Resolve<IFormattingRuleService> ();
             var rules = ruleService.Rules.OrderBy(x => x.Priority);
 
-            temp.AddRange(tempLines, (line) => 
-                {
-                    var newLine = new LogLineData(line);
-                    foreach (var rule in rules)
-                    {
-                        if (rule.CheckRule(newLine))
-                            break;
-                    }
-
-                    return newLine;
-                });
+            temp.AddRange(tempLines, (line) => CreateLineData(line));
 
             Lines = temp;
 
@@ -134,6 +126,28 @@ namespace LogViewer.Core.Model
             _timer.Elapsed += _timer_Elapsed;
             _timer.AutoReset = false;
         }
+
+        /// <summary>
+        /// Creates a line and checks existing rules against it
+        /// </summary>
+        /// <param name="line">line string value</param>
+        /// <returns>LogLineData item</returns>
+        private LogLineData CreateLineData(string line)
+        {
+            if (_ruleService == null)
+                _ruleService = Mvx.Resolve<IFormattingRuleService>();
+
+            var newLine = new LogLineData(line);
+            _ruleService.CheckRules(newLine);
+
+            return newLine;
+        }
+
+        
+
+        #endregion
+
+        #region Handlers
 
         void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -159,7 +173,7 @@ namespace LogViewer.Core.Model
 
             dispatcher.RequestMainThreadAction(new Action(() =>
             {
-                Lines.AddRange(newLines, (line) => new LogLineData(line));
+                Lines.AddRange(newLines, (line) => CreateLineData(line));
             }));
         }
 
@@ -169,7 +183,7 @@ namespace LogViewer.Core.Model
             {
                 LastUpdated = DateTime.Now;
 
-                if(!_timer.Enabled)
+                if (!_timer.Enabled)
                 {
                     _timer.Start();
                 }

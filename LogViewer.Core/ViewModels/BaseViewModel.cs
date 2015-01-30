@@ -10,18 +10,32 @@ namespace LogViewer.Core.ViewModels
 {
     public class BaseViewModel : MvxViewModel
     {
-        #region INotifyPropertyChanged
+        private List<IMvxCommand> _commands = new List<IMvxCommand>();
 
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] String propertyName = null)
+        #region Commands
+
+        protected void RegisterCommand(IMvxCommand command)
         {
-            if (EqualityComparer<T>.Default.Equals(storage, value))
-            {
-                return false;
-            }
+            if (_commands.Contains(command))
+                return;
 
-            storage = value;
-            this.RaisePropertyChanged(propertyName);
-            return true;
+            if (_commands.Count == 0)
+                RegisterCanExecuteChangedHandler();
+
+            _commands.Add(command);
+        }
+
+        private void RegisterCanExecuteChangedHandler()
+        {
+            this.PropertyChanged += CommandCanExecuteHandler;
+        }
+
+        private void CommandCanExecuteHandler(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            foreach (var item in _commands)
+            {
+                item.RaiseCanExecuteChanged();
+            }
         }
 
         #endregion

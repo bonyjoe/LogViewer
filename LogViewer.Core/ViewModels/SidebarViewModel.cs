@@ -19,7 +19,6 @@ namespace LogViewer.Core.ViewModels
         private String _currentFilename;
         private ObservableCollection<FormattingRuleData> _rules;
         private FormattingRuleData _selectedRule;
-        private FormattingRuleData _cachedSelectedRule;
 
         #endregion
 
@@ -43,7 +42,6 @@ namespace LogViewer.Core.ViewModels
             set 
             { 
                 SetProperty(ref _selectedRule, value);
-                _cachedSelectedRule = value.Clone();
             }
         }
 
@@ -54,16 +52,8 @@ namespace LogViewer.Core.ViewModels
         public SidebarViewModel(IFormattingRuleService ruleService)
         {
             _ruleService = ruleService;
-            if(ruleService.Rules == null)
-            {
-                ruleService.Rules = new ObservableCollection<FormattingRuleData>();
-                this.Rules = ruleService.Rules;
-            }
-            else
-            {
-                this.Rules = ruleService.Rules;
-            }
-
+            _ruleService.LoadRules();
+            Rules = _ruleService.Rules;
         }
 
         #endregion
@@ -126,61 +116,116 @@ namespace LogViewer.Core.ViewModels
 
         #endregion
 
-        #region SaveRuleEditCommand
+        #region RemoveRuleCommand
 
-        private MvxCommand _saveRuleEditCommand;
+        private MvxCommand _removeRuleCommand;
 
-        public MvxCommand SaveRuleEditCommand
+        public MvxCommand RemoveRuleCommand
         {
             get
             {
-                if (_saveRuleEditCommand == null)
+                if (_removeRuleCommand == null)
                 {
-                    _saveRuleEditCommand = new MvxCommand(SaveRuleEdit_Executed, SaveRuleEdit_CanExecute);
+                    _removeRuleCommand = new MvxCommand(RemoveRule_Executed, RemoveRule_CanExecute);
+                    RegisterCommand(_removeRuleCommand);
                 }
-                return _saveRuleEditCommand;
+                return _removeRuleCommand;
             }
         }
 
-        private bool SaveRuleEdit_CanExecute()
+        private bool RemoveRule_CanExecute()
         {
-            //Command can execute logic
-            return true;
+            return SelectedRule != null;
         }
 
-        private void SaveRuleEdit_Executed()
+        private void RemoveRule_Executed()
         {
-            //Command execute logic
-            _cachedSelectedRule = SelectedRule.Clone();
+            Rules.Remove(SelectedRule);
+            SelectedRule = null;
         }
 
         #endregion
 
-        #region CancelRuleEditCommand
+        #region MoveRuleUpCommand
 
-        private MvxCommand _cancelRuleEditCommand;
+        private MvxCommand _moveRuleUpCommand;
 
-        public MvxCommand CancelRuleEditCommand
+        public MvxCommand MoveRuleUpCommand
         {
             get
             {
-                if (_cancelRuleEditCommand == null)
+                if (_moveRuleUpCommand == null)
                 {
-                    _cancelRuleEditCommand = new MvxCommand(CancelRuleEdit_Executed, CancelRuleEdit_CanExecute);
+                    _moveRuleUpCommand = new MvxCommand(MoveRuleUp_Executed, MoveRuleUp_CanExecute);
+                    RegisterCommand(_moveRuleUpCommand);
                 }
-                return _cancelRuleEditCommand;
+                return _moveRuleUpCommand;
             }
         }
 
-        private bool CancelRuleEdit_CanExecute()
+        private bool MoveRuleUp_CanExecute()
         {
-            //Command can execute logic
+            if (this.SelectedRule == null)
+                return false;
+
+            if (Rules.IndexOf(SelectedRule) == 0)
+                return false;
+
             return true;
         }
 
-        private void CancelRuleEdit_Executed()
+        private void MoveRuleUp_Executed()
         {
-            SelectedRule = _cachedSelectedRule;
+            int oldIndex = Rules.IndexOf(SelectedRule);
+            int newIndex = oldIndex - 1;
+
+            SelectedRule.Priority -= 1;
+            Rules.Move(oldIndex, newIndex);
+
+            Rules[oldIndex].Priority += 1;
+            RaisePropertyChanged(() => SelectedRule);
+        }
+
+        #endregion
+
+        #region MoveRuleDownCommand
+
+        private MvxCommand _moveRuleDownCommand;
+
+        public MvxCommand MoveRuleDownCommand
+        {
+            get
+            {
+                if (_moveRuleDownCommand == null)
+                {
+                    _moveRuleDownCommand = new MvxCommand(MoveRuleDown_Executed, MoveRuleDown_CanExecute);
+                    RegisterCommand(_moveRuleDownCommand);
+                }
+                return _moveRuleDownCommand;
+            }
+        }
+
+        private bool MoveRuleDown_CanExecute()
+        {
+            if (this.SelectedRule == null)
+                return false;
+
+            if (Rules.IndexOf(SelectedRule) == Rules.Count - 1)
+                return false;
+
+            return true;
+        }
+
+        private void MoveRuleDown_Executed()
+        {
+            int oldIndex = Rules.IndexOf(SelectedRule);
+            int newIndex = oldIndex + 1;
+
+            SelectedRule.Priority += 1;
+            Rules.Move(oldIndex, newIndex);
+
+            Rules[oldIndex].Priority -= 1;
+            RaisePropertyChanged(() => SelectedRule);
         }
 
         #endregion

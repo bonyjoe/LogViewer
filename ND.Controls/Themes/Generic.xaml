@@ -19,41 +19,43 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <Canvas x:Name="PART_ColorCanvas" Panel.ZIndex="1">
-                                <Canvas.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="White"/>
-                                        <GradientStop Color="{Binding Path=CurrentHue, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}, FallbackValue=Pink}" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Canvas.Background>
-                                <Canvas x:Name="PART_BlackCanvas" Width="{Binding Path=ActualWidth, ElementName=PART_ColorCanvas}" Height="{Binding Path=ActualHeight, ElementName=PART_ColorCanvas}">
+                            <Border BorderBrush="Black" BorderThickness="1">
+                                <Canvas x:Name="PART_ColorCanvas" Panel.ZIndex="1">
                                     <Canvas.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                            <GradientStop Color="Transparent"/>
-                                            <GradientStop Color="Black" Offset="1"/>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="White"/>
+                                            <GradientStop Color="{Binding Path=CurrentHue, RelativeSource={RelativeSource AncestorType={x:Type local:ColorPicker}}, FallbackValue=Pink}" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Canvas.Background>
-                                </Canvas>
-                                <Canvas x:Name="PART_Selector"
+                                    <Canvas x:Name="PART_BlackCanvas" Width="{Binding Path=ActualWidth, ElementName=PART_ColorCanvas}" Height="{Binding Path=ActualHeight, ElementName=PART_ColorCanvas}">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="Transparent"/>
+                                                <GradientStop Color="Black" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas x:Name="PART_Selector"
                                     Canvas.Top="{Binding Path=SelectorYPos, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Canvas.Left="{Binding Path=SelectorXPos, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <Path Canvas.Top="-6" Canvas.Left="-6" Fill="Black" Stroke="White" StrokeThickness="1"
+                                        <Path Canvas.Top="-6" Canvas.Left="-6" Fill="Black" Stroke="White" StrokeThickness="1"
                                       >
-                                        <Path.Data>
-                                            <CombinedGeometry GeometryCombineMode="Exclude">
-                                                <CombinedGeometry.Geometry1>
-                                                    <EllipseGeometry Center="6,6" RadiusX="6" RadiusY="6"/>
-                                                </CombinedGeometry.Geometry1>
-                                                <CombinedGeometry.Geometry2>
-                                                    <EllipseGeometry Center="6,6" RadiusX="3" RadiusY="3"/>
-                                                </CombinedGeometry.Geometry2>
-                                            </CombinedGeometry>
-                                        </Path.Data>
-                                    </Path>
+                                            <Path.Data>
+                                                <CombinedGeometry GeometryCombineMode="Exclude">
+                                                    <CombinedGeometry.Geometry1>
+                                                        <EllipseGeometry Center="6,6" RadiusX="6" RadiusY="6"/>
+                                                    </CombinedGeometry.Geometry1>
+                                                    <CombinedGeometry.Geometry2>
+                                                        <EllipseGeometry Center="6,6" RadiusX="3" RadiusY="3"/>
+                                                    </CombinedGeometry.Geometry2>
+                                                </CombinedGeometry>
+                                            </Path.Data>
+                                        </Path>
+                                    </Canvas>
                                 </Canvas>
-                            </Canvas>
+                            </Border>
 
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="1" Margin="0,2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -80,25 +82,27 @@
                         </Grid>
                         
                         <Grid Grid.Column="1">
-                            <Canvas x:Name="PART_HueCanvas" Width="20" Margin="20,0">
-                                <Canvas.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Color="#FF0000" Offset="0"/>
-                                        <GradientStop Color="#FF00FF" Offset="0.167"/>
-                                        <GradientStop Color="#0000FF" Offset="0.333"/>
-                                        <GradientStop Color="#00FFFF" Offset="0.5"/>
-                                        <GradientStop Color="#00FF00" Offset="0.667"/>
-                                        <GradientStop Color="#FFFF00" Offset="0.833"/>
-                                        <GradientStop Color="#FF0000" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Canvas.Background>
-                                <Canvas x:Name="PART_HueSelector"
+                            <Border BorderBrush="Black" BorderThickness="1" Margin="20,0" Width="20">
+                                <Canvas x:Name="PART_HueCanvas">
+                                    <Canvas.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#FF0000" Offset="0"/>
+                                            <GradientStop Color="#FF00FF" Offset="0.167"/>
+                                            <GradientStop Color="#0000FF" Offset="0.333"/>
+                                            <GradientStop Color="#00FFFF" Offset="0.5"/>
+                                            <GradientStop Color="#00FF00" Offset="0.667"/>
+                                            <GradientStop Color="#FFFF00" Offset="0.833"/>
+                                            <GradientStop Color="#FF0000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Canvas.Background>
+                                    <Canvas x:Name="PART_HueSelector"
                                     Canvas.Top="{Binding Path=HueSelectorPos, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     Canvas.Left="0">
-                                    <Path Canvas.Top="-6" Canvas.Left="0" Fill="Black" Height="12" Width="20"
+                                        <Path Canvas.Top="-6" Canvas.Left="0" Fill="Black" Height="12" Width="20"
                                       Data="M0,0L5,5 0,10z M20,0L15,5 20,10z"/>
+                                    </Canvas>
                                 </Canvas>
-                            </Canvas>
+                            </Border>
                         </Grid>
                     </Grid>
                 </ControlTemplate>

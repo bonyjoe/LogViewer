@@ -11,5 +11,10 @@ namespace LogViewer.Core.Services
     public interface IFormattingRuleService
     {
         ObservableCollection<FormattingRuleData> Rules { get; set; }
+        void LoadRules();
+        void SaveRules();
+        void CheckRules(LogLineData line);
+        void CheckRules(IEnumerable<LogLineData> lines);
+        void RefreshAppliedRules();
     }
 }

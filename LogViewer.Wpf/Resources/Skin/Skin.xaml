@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="MainView.xaml"/>
+        <ResourceDictionary Source="Skin.MainView.xaml"/>
+        <ResourceDictionary Source="Skin.SidebarView.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

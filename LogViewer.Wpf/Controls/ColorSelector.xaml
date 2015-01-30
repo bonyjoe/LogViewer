@@ -6,7 +6,8 @@
              xmlns:controls="clr-namespace:ND.Controls;assembly=ND.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             x:Name="rootControl">
+             x:Name="rootControl"
+             >
     <Grid DataContext="{Binding ElementName=rootControl}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,8 +21,9 @@
         </Grid>
 
         <Popup x:Name="colorPopup" Placement="Bottom" PlacementTarget="{Binding ElementName=colorDisplay}" Width="300"
-               AllowsTransparency="True" StaysOpen="False">
-            <Grid Background="White">
+               AllowsTransparency="True" StaysOpen="False"
+               >
+            <Grid Background="#FFCFCFCF">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -29,7 +31,8 @@
 
                 <ListBox Grid.Row="0" ItemsSource="{Binding Path=AvailableColors}"
                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                 SelectedIndex="{Binding Path=SelectedColorIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                 SelectedIndex="{Binding Path=SelectedColorIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         Background="#FFCFCFCF">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Rows="1" IsItemsHost="True"/>
@@ -41,8 +44,9 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Border Grid.Row="1" Padding="10">
-                    <controls:ColorPicker Grid.Row="1" CurrentSelectedColor="{Binding Path=CustomColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <Border Grid.Row="1" Padding="10" BorderBrush="#FFABADB3" BorderThickness="1">
+                    <controls:ColorPicker Grid.Row="1" Background="#FFCFCFCF"
+                                          CurrentSelectedColor="{Binding Path=CustomColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Width="auto"/>
                 </Border>
             </Grid>

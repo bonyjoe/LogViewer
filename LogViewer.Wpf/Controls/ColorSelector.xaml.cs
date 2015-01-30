@@ -51,8 +51,11 @@ namespace LogViewer.Wpf.Controls
             get { return _customColor; }
             set
             {
-                SetProperty(ref _customColor, value);
-                OnCustomColorChanged();
+                if (_customColor != value)
+                {
+                    SetProperty(ref _customColor, value);
+                    OnCustomColorChanged();
+                }
             }
         }
 
@@ -69,14 +72,24 @@ namespace LogViewer.Wpf.Controls
         public static readonly DependencyProperty AvailableColorsProperty =
             DependencyProperty.Register("AvailableColors", typeof(IEnumerable<Color>), typeof(ColorSelector), new PropertyMetadata(_defaultAvailableColors));
 
-        public Color SelectedColor
+        public Color? SelectedColor
         {
-            get { return (Color)GetValue(SelectedColorProperty); }
+            get { return (Color?)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedColorProperty =
-            DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorSelector), new PropertyMetadata(null));
+            DependencyProperty.Register("SelectedColor", typeof(Color?), typeof(ColorSelector), new PropertyMetadata(null, SelectedColorProperty_Changed));
+
+        private static void SelectedColorProperty_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ColorSelector cs = d as ColorSelector;
+            if( cs != null && e.NewValue != null)
+            {
+                //set custom color
+                cs.CustomColor = (Color)e.NewValue;
+            }
+        }
 
         #endregion
 
